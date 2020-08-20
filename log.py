@@ -1,8 +1,8 @@
-from discord_webhook import DiscordWebhook
+import discord
 
 logFileName = None
 logFile = None
-discordWebhookUrl = None
+discordClient = None
 
 ##File
 
@@ -108,12 +108,11 @@ def _writeFileResume(ignoredCurrencies):
 
 ##Discord Webhook
 
-def setDiscordWebhookUrl(url):
-    global discordWebhookUrl
-    discordWebhookUrl = url;
+def setDiscordBot(client):
+    global discordClient
+    discordClient= client;
     return
 
-def writeDiscordText(text):
-    hook = DiscordWebhook(url=discordWebhookUrl, content=text)
-    response = hook.execute()
+def _writeDiscordText(text):
+
     return
