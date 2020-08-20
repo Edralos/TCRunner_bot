@@ -1,4 +1,5 @@
 import discord
+from DiscordBot import DiscordBot as db
 
 logFileName = None
 logFile = None
@@ -114,5 +115,5 @@ def setDiscordBot(client):
     return
 
 def _writeDiscordText(text):
-
+    discordClient.
     return
