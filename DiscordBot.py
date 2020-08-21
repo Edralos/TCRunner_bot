@@ -12,11 +12,11 @@ class DBot(commands.Bot):
     TOKEN = None
     CHANNEL = None
     MENTION= None
-    def __init__(self, *args, **kwargs):
+    def __init__(self, token, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.TOKEN = token
 
-    def setToken(self, tk):
-        self.TOKEN = tk
+
     
 
     async def _start(self):
@@ -56,10 +56,10 @@ class DBot(commands.Bot):
         loop = asyncio.get_event_loop()
         loop.create_task(self.CHANNEL.send(self.MENTION+" " + txt))
 
-    def sendEmbed(self,content, title, description, fields, color):
+    def sendEmbed(self, title, description, fields, color,content=None):
         embed=discord.Embed(title=str(title), color=color, description=description)
         for k,v in fields.items():
-            embed.add_field(name=k, value = v, inline=False);
+            embed.add_field(name=k, value = v, inline=False)
         loop = asyncio.get_event_loop()
         loop.create_task(self.CHANNEL.send(content = content, embed=embed))
 
