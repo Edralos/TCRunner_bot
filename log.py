@@ -109,8 +109,11 @@ def _writeFileResume(ignoredCurrencies):
 
 ##Discord Webhook
 
-def setDiscordBot(token, prefix):
+def setDiscordBot(token, prefix=None):
     db.setBot(token)
+    if prefix is not None:
+        db.setPrefix(prefix)
+    db.runDiscordBot()
     return
 
 def _writeDiscordText(text):
@@ -121,7 +124,9 @@ def _writeInitLogDiscord():
     _writeDiscordText("Purchase : " + str(amount) + " " +cryptoCurrency + " for " + str(cost) + " " + exchangeCurrency+ "\n")
     
 def _writeDiscordNecklineReached(neckType, currency, val):
-    _writeDiscordText("Neckline " + neckType + " ("+ str(val) + ") reached for :" + currency + "\nNext neckline breach won't be considered until units of this currency are sold\n")
+    field = {"Type": neckType, "Neckline value": str(val), "Currency": currency}
+    db.sendEmbed("Next neckline breach won't be considered until units of this currency are sold","Neckline passed",db.MENTION,fields, 0x1ab6cb )
+
 
 
 def _writeDiscordLoan(currency, amount):
