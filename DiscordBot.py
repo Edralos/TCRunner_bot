@@ -8,10 +8,15 @@ import discord
 bot = commands.Bot(command_prefix="!")
 TOKEN = None
 CHANNEL = None
+MENTION= None
 
-def setToken(tk):
+def setBot(tk):
     global TOKEN
     TOKEN = tk
+    
+def setPrefix(pref):
+    global bot
+    bot =  commands.Bot(command_prefix=pref)
 
 async def _start():
     await bot.start(TOKEN)
@@ -31,9 +36,12 @@ async def isConnected(ctx):
 @bot.command()
 async def here(ctx):
     global CHANNEL
+    global MENTION
     CHANNEL = ctx.channel
     print(ctx.channel)
-    await ctx.send("channel has been set to " + ctx.channel.name)
+    MENTION = ctx.message.author.mention
+    print(MENTION)
+    await ctx.send("channel has been set to " + ctx.channel.name + " for user " + MENTION)
 
 def runDiscordBot():
     loop = asyncio.get_event_loop()
@@ -44,10 +52,14 @@ def runDiscordBot():
 
 
 
-def sendText( txt ):
-    print(txt)
-    print(CHANNEL)
+def sendText(txt):
     loop = asyncio.get_event_loop()
     loop.create_task(CHANNEL.send(txt))
-    
+
+def sendEmbed(title, description, fields):
+    embed=discord.Embed(title=str(title), color=0xc3a613, description=description)
+    for k,v in fields.items():
+        embed.add_field(name=k, value = v, inline=False);
+    loop = asyncio.get_event_loop()
+    loop.create_task(CHANNEL.send(embed=embed))
 

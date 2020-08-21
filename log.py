@@ -1,9 +1,9 @@
 import discord
-from DiscordBot import DiscordBot as db
+import DiscordBot as db
 
 logFileName = None
 logFile = None
-discordClient = None
+
 
 ##File
 
@@ -109,11 +109,20 @@ def _writeFileResume(ignoredCurrencies):
 
 ##Discord Webhook
 
-def setDiscordBot(client):
-    global discordClient
-    discordClient= client;
+def setDiscordBot(token, prefix):
+    db.setBot(token)
     return
 
 def _writeDiscordText(text):
-    discordClient.
+    db.sendText(text)
     return
+
+def _writeInitLogDiscord():
+    _writeDiscordText("Purchase : " + str(amount) + " " +cryptoCurrency + " for " + str(cost) + " " + exchangeCurrency+ "\n")
+    
+def _writeDiscordNecklineReached(neckType, currency, val):
+    _writeDiscordText("Neckline " + neckType + " ("+ str(val) + ") reached for :" + currency + "\nNext neckline breach won't be considered until units of this currency are sold\n")
+
+
+def _writeDiscordLoan(currency, amount):
+    _writeDiscordText()
