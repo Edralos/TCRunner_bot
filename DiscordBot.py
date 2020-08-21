@@ -5,65 +5,61 @@ import os
 import discord
 
 
-bot = commands.Bot(command_prefix="!")
-TOKEN = None
-CHANNEL = None
-MENTION= None
+
+
 
 class DBot(commands.Bot):
+    TOKEN = None
+    CHANNEL = None
+    MENTION= None
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-def setBot(tk):
-    global TOKEN
-    TOKEN = tk
+    def setToken(self, tk):
+        self.TOKEN = tk
     
-def setPrefix(pref):
-    global bot
-    bot =  commands.Bot(command_prefix=pref)
 
-async def _start():
-    await bot.start(TOKEN)
+    async def _start(self):
+        await self.start(self.TOKEN)
 
-def _run_it_forever(loop):
-    loop.run_forever()
+    def _run_it_forever(self,loop):
+        loop.run_forever()
 
 
-@bot.event
-async def on_ready():
-    print("Discord bot connected")
+    
+    async def on_ready(self):
+        print("Discord bot connected")
 
-@bot.command()
-async def isConnected(ctx):
-    await ctx.send("YES I AM")
+    
+    async def isConnected(self,ctx):
+        await ctx.send("YES I AM")
 
-@bot.command()
-async def here(ctx):
-    global CHANNEL
-    global MENTION
-    CHANNEL = ctx.channel
-    print(ctx.channel)
-    MENTION = ctx.message.author.mention
-    print(MENTION)
-    await ctx.send("channel has been set to " + ctx.channel.name + " for user " + MENTION)
+    
+    async def here(self,ctx):
+        
+        self.CHANNEL = ctx.channel
+        print(ctx.channel)
+        self.MENTION = ctx.message.author.mention
+        print(self.MENTION)
+        await ctx.send("channel has been set to " + ctx.channel.name + " for user " + self.MENTION)
 
-def runDiscordBot():
-    loop = asyncio.get_event_loop()
-    loop.create_task(_start())
-
-    thread = threading.Thread(target=_run_it_forever, args=(loop,))
-    thread.start()
+    def runDiscordBot(self):
+        loop = asyncio.get_event_loop()
+        loop.create_task(self._start())
+    
+        thread = threading.Thread(target=self._run_it_forever, args=(loop,))
+        thread.start()
 
 
 
-def sendText(txt):
-    loop = asyncio.get_event_loop()
-    loop.create_task(CHANNEL.send(MENTION+" " + txt))
+    def sendText(self,txt):
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.CHANNEL.send(self.MENTION+" " + txt))
 
-def sendEmbed(content, title, description, fields, color):
-    embed=discord.Embed(title=str(title), color=color, description=description)
-    for k,v in fields.items():
-        embed.add_field(name=k, value = v, inline=False);
-    loop = asyncio.get_event_loop()
-    loop.create_task(CHANNEL.send(content = content, embed=embed))
+    def sendEmbed(self,content, title, description, fields, color):
+        embed=discord.Embed(title=str(title), color=color, description=description)
+        for k,v in fields.items():
+            embed.add_field(name=k, value = v, inline=False);
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.CHANNEL.send(content = content, embed=embed))
 
