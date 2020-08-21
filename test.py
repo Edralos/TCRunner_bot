@@ -1,4 +1,4 @@
-import DiscordBot
+import DiscordBot as db
 
-bt = DiscordBot.DBot('')
-bt.runDiscordBot()
+db.setToken('')
+db.runDiscordBot()
