@@ -44,8 +44,10 @@ def runDiscordBot():
 
 
 
-async def sendText( txt ):
+def sendText( txt ):
     print(txt)
     print(CHANNEL)
-    await bot.send_message(discord.Object(id=CHANNEL.id), 'hello')
+    loop = asyncio.get_event_loop()
+    loop.create_task(CHANNEL.send(txt))
+    
 
