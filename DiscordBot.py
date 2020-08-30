@@ -36,12 +36,15 @@ class DBot(commands.Bot):
 
     
     async def here(self,ctx):
-        
-        self.CHANNEL = ctx.channel
-        print(ctx.channel)
-        self.MENTION = ctx.message.author.mention
-        print(self.MENTION)
-        await ctx.send("channel has been set to " + ctx.channel.name + " for user " + self.MENTION)
+        if self.MENTION is None:
+            self.CHANNEL = ctx.channel
+            print(ctx.channel)
+            self.MENTION = ctx.message.author.mention
+            print(self.MENTION)
+            await ctx.send("channel has been set to " + ctx.channel.name + " for user " + self.MENTION)
+        elif self.MENTION == ctx.author.mention:
+            self.CHANNEL = ctx.channel
+            await ctx.send("channel has been changed to " + ctx.channel.name + ". User won't be changed and is " + self.MENTION)
 
     def runDiscordBot(self):
         loop = asyncio.get_event_loop()
