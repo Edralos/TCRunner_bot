@@ -3,7 +3,7 @@ import asyncio
 import threading
 import os
 import discord
-from ManagerCog import ManagerCog
+from Cogs import MainCog
 
 
 
@@ -17,7 +17,7 @@ class DBot(commands.Bot):
         self.TOKEN = token
 
     def initCog(self):
-        self.add_cog(ManagerCog(self))
+        self.add_cog(MainCog(self))
     
 
     async def _start(self):

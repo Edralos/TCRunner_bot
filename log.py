@@ -112,6 +112,7 @@ def _writeFileResume(ignoredCurrencies):
 def setDiscordBot(token, prefix):
     global bot
     bot = DBot(command_prefix = prefix, token = token)
+    bot.initCog()
 
 
 def _writeDiscordText(text):
@@ -172,9 +173,11 @@ def setConfig(fileName, token = None, prefix = None):
         if prefix is None:
             _writeFileText("bot was not provided a command prefix. will use default \"!\" as default")
             setDiscordBot(token=token, prefix=prefix)
+            bot.runDiscordBot()
         else:
             _writeFileText("bot has been set with prefix \""+ prefix+"\"")
             setDiscordBot(token=token, prefix=prefix)
+            bot.runDiscordBot()
 
 def writeText(text):
     _writeFileText(txt=text)
